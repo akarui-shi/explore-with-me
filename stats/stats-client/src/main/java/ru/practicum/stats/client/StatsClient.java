@@ -19,14 +19,12 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class StatsClient {
-
     private static final ParameterizedTypeReference<List<ViewStatsDto>> VIEW_STATS_LIST_REFERENCE =
             new ParameterizedTypeReference<List<ViewStatsDto>>() {};
 
     private final WebClient webClient;
 
     public StatsClient(@Value("${stats-server.url}") String statsServerUrl) {
-        /* delete */ log.info("Stats server address: " + statsServerUrl);
         this.webClient = WebClient.builder()
                 .baseUrl(statsServerUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
