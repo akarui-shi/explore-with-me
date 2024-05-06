@@ -10,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 import ru.practicum.stats.dto.EndpointHitDto;
 import ru.practicum.stats.dto.ViewStatsDto;
-import ru.practicum.stats.mapping.EndpointHitMapper;
 import ru.practicum.stats.mapping.ViewStatsMapper;
 import ru.practicum.stats.model.EndpointHit;
 import ru.practicum.stats.model.ViewStats;
@@ -20,8 +19,6 @@ import ru.practicum.stats.service.exception.EntityHasNotSavedException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,10 +26,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class StatsServiceImplTest {
-
-    @Spy
-    EndpointHitMapper hitMapper = Mappers.getMapper(EndpointHitMapper.class);
-
     @Spy
     ViewStatsMapper viewStatsMapper = Mappers.getMapper(ViewStatsMapper.class);
     @Mock
@@ -65,6 +58,4 @@ public class StatsServiceImplTest {
         assertEquals(actualStatsList, List.of(viewStatsMapper.toDto(stats)));
         verify(statsRepository).getStats(start, end);
     }
-
-
 }
