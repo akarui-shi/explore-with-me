@@ -5,14 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
-@Table(name = "endpointhits")
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "endpointhits")
 public class EndpointHit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
