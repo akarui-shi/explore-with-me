@@ -53,13 +53,14 @@ public class StatsServiceImplTest {
         LocalDateTime end = LocalDateTime.of(2024, 4, 1, 23, 59);
 
         ViewStats stats = ViewStats.builder().app("app").uri("/service").hits(10L).build();
+        List<String> endpoints = null;
 
-        when(statsRepository.getStats(start, end)).thenReturn(List.of(stats));
+        when(statsRepository.getStatsWithFilters(start, end, endpoints)).thenReturn(List.of(stats));
 
         List<ViewStatsDto> actualStatsList = statsService.getStats(start, end, null, false);
 
         assertEquals(actualStatsList, List.of(viewStatsMapper.toDto(stats)));
-        verify(statsRepository).getStats(start, end);
+        verify(statsRepository).getStatsWithFilters(start, end, endpoints);
     }
 
 
