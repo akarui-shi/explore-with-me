@@ -40,19 +40,8 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
-        List<ViewStats> stats;
-        if (!unique && uris == null) {
-            stats = statsRepository.getStats(start, end);
-        } else if (unique && uris == null) {
-            stats = statsRepository.getStatsUnique(start, end);
-        } else if (!unique) {
-            stats = statsRepository.getStatsWithUris(start, end, uris);
-        } else {
-            stats = statsRepository.getStatsUniqueWithUris(start, end, uris);
-        }
-        log.info("Got stats: " + stats);
-        return stats.stream()
-                .map(viewStatsMapper::toDto)
-                .collect(Collectors.toList());
+        List<ViewStats> stats = unique ? statsRepository.getStatsUniqueWithFilters(start, end, uris) :
+                statsRepository.getStatsWithFilters(start, end, uris);
+        return stats.stream().map(viewStatsMapper::toDto).collect(Collectors.toList());
     }
 }
