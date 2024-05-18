@@ -1,6 +1,5 @@
 package ru.practicum.stats.client;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import reactor.core.publisher.Mono;
