@@ -14,6 +14,7 @@ import ru.practicum.stats.repository.StatsRepository;
 import ru.practicum.stats.service.StatsService;
 import ru.practicum.stats.service.exception.EntityHasNotSavedException;
 
+import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +41,14 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
+        if (start != null && end == null || start == null && end != null) {
+            throw new ValidationException("Can't get stats because both start and end dates must be both null or not null");
+        }
+
+        if (start != null && start.isAfter(end)) {
+            throw new ValidationException("Can't get stats because start date is after end date.");
+        }
+
         List<ViewStats> stats = unique ? statsRepository.getStatsUniqueWithFilters(start, end, uris) :
                 statsRepository.getStatsWithFilters(start, end, uris);
         return stats.stream().map(viewStatsMapper::toDto).collect(Collectors.toList());
