@@ -48,7 +48,7 @@ public class EventServiceImpl implements EventService {
     private final CategoryRepository categoryRepository;
     private final Environment environment;
     private final EventMapper eventMapper;
-    private final StatsClient statsClient = new StatsClient("http://localhost:9090");
+    private final StatsClient statsClient = new StatsClient("http://stats-server:9090");
 
     @Override
     public List<EventShortDto> getEvents(EventSearchFilter searchFilter, int from, int size, HttpServletRequest request) {
