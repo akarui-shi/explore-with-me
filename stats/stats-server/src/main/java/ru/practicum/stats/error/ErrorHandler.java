@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.stats.service.exception.EntityHasNotSavedException;
 
+import javax.validation.ValidationException;
 import java.time.format.DateTimeParseException;
 
 @RestControllerAdvice
@@ -46,6 +47,13 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleExceptions(RuntimeException exception) {
         log.warn("{}", exception.getMessage());
+        return new ErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidationException(ValidationException exception) {
+        log.warn(exception.getMessage());
         return new ErrorResponse(exception.getMessage());
     }
 
