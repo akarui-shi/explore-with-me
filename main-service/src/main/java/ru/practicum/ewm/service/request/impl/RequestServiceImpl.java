@@ -67,6 +67,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    @Transactional
     public ParticipationRequestDto cancelRequest(Long userId, Long requestId) {
         userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundDataException("User with id " + userId + " not found"));
@@ -93,6 +94,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    @Transactional
     public EventRequestStatusUpdateResult updateRequestsByUserIdAndEventId(Long userId, Long eventId, EventRequestStatusUpdateRequest requests) {
         userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundDataException("User with id " + userId + " not found"));

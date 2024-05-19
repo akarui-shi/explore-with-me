@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.exception.EventNotModifiableException;
 import ru.practicum.ewm.exception.IncorrectDateRangeException;
 import ru.practicum.ewm.exception.NotAuthorizedException;
@@ -101,6 +102,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto addEvent(Long userId, NewEventDto newEventDto) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundDataException("User with id '" + userId + "' not found."));
@@ -134,6 +136,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto updateEvent(Long userId, Long eventId, UpdateEventDto event) {
         userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundDataException("User with id '" + userId + "' not found."));
@@ -164,6 +167,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto updateEvent(Long eventId, UpdateEventDto updateEventDto) {
         Event event = eventRepository.findById(eventId).orElseThrow(() ->
                 new NotFoundDataException("Event with id '" + eventId + "' not found."));

@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.mapper.UserMapper;
 import ru.practicum.ewm.model.user.User;
 import ru.practicum.ewm.model.user.dto.NewUserDto;
@@ -38,6 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDto addUser(NewUserDto newUser) {
         User savedUser = userRepository.save(userMapper.fromDto(newUser));
         log.info("Saved user: {}", savedUser);
@@ -45,6 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new RuntimeException("User not found"));

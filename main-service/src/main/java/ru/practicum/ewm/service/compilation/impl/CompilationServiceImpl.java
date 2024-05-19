@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.exception.NotFoundDataException;
 import ru.practicum.ewm.mapper.CompilationMapper;
 import ru.practicum.ewm.model.compilation.Compilation;
@@ -60,6 +61,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public CompilationDto createCompilation(NewCompilationDto newCompilationDto) {
         List<Event> events = newCompilationDto.getEvents() != null ?
                 eventRepository.findAllById(newCompilationDto.getEvents()) : List.of();
@@ -73,6 +75,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public void deleteCompilation(Long compId) {
         Compilation compilation = compilationRepository.findById(compId).orElseThrow(() ->
                 new NotFoundDataException("Compilation with id " + compId + " not found"));
@@ -83,6 +86,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public CompilationDto updateCompilation(long compId, UpdateCompilationDto updateCompilation) {
         Compilation compilation = compilationRepository.findById(compId).orElseThrow(() ->
                 new NotFoundDataException("Compilation with id " + compId + " not found"));
