@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.exception.NotFoundDataException;
 import ru.practicum.ewm.model.category.Category;
 import ru.practicum.ewm.model.category.dto.CategoryDto;
@@ -45,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDto createCategory(NewCategoryDto category) {
         Category newCategory = categoryRepository.save(mapper.fromDto(category));
 
@@ -54,6 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void deleteCategory(Long catId) {
         Category category = categoryRepository.findById(catId).orElseThrow(() ->
                 new NotFoundDataException("Category with id " + catId + " not found"));
@@ -64,6 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDto updateCategory(Long catId, NewCategoryDto category) {
         Category categoryToUpdate = categoryRepository.findById(catId).orElseThrow(() ->
                 new NotFoundDataException("Category with id " + catId + " not found"));
