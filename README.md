@@ -48,8 +48,5 @@ Explore With Me - это веб-приложение для планирован
 - **Database**: PostgreSQL
 - **CI/CD**: GitHub Actions, Docker
 
-## Расширенная техническая документация
-Полная техническая документация доступна в [документации проекта](./docs/technical_documentation.md).
-
 ## Автор
 - **Мария Кучерова** — [mmar1yakucherova@yandex.ru](mailto:mmar1yakucherova@yandex.ru)
